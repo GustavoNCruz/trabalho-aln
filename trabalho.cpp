@@ -23,14 +23,14 @@ vector<double> operator + (vector<double> a, vector<double> b){
 int main(){
 
 	int n, m; cin >> n >> m;
-	vector<vector<pair<int,double>>> g(n+1);
+	vector<vector<pair<int,double>>> g(n);
+
 	for(int i=0;i<m;i++){
 		int u, v; cin >> u >> v; u--, v--;
 		double r; cin >> r;
 		g[u].push_back({v, r});
 		g[v].push_back({u, r});
 	}
-
 
 	// L
 	auto mult = [&] (vector<double> v){
@@ -39,7 +39,7 @@ int main(){
 		for(int j=0;j<n-1;j++){
 			double soma = 0;
 			for(auto [i, r] : g[j]){
-				w[j] -= (1/r) * v[i];
+				if(i < n-1) w[j] -= (1/r) * v[i];
 				soma += (1/r);
 			}
 			w[j] += soma * v[j];
